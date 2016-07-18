@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>DimensionLab</title>
+    <meta name="description" content="DimensionLab">
+    <script src="https://aframe.io/releases/0.2.0/aframe.min.js"></script>
+    <script src="https://rawgit.com/ngokevin/aframe-look-at-component/master/dist/aframe-look-at-component.min.js"></script>
+  </head>
+  <body>
+    <a-scene fog="type: linear; color: #020202; far: 24; near: 6">
+      <a-assets>
+        <img id="floor" src="./img/noisy-texture.png">
+        <img id="text" src="./img/dimensionlab.png">
+        <img id="redirect" src="./img/redirect.png">
+        <a-asset-item id="github-obj" src="./models/social/github.obj"></a-asset-item>
+      </a-assets>
+
+      <a-entity
+        id="avatar" 
+        camera wasd-controls
+        look-controls="enabled: true"
+        position="0 1.8 4.75"
+      >
+        <a-cursor id="cursor" color="#4CC3D9" fuse="true" maxDistance="20" timeout="3000"></a-cursor>
+      </a-entity>
+      
+      <a-image src="#text" width="4" height="1.192" position="0 2.5 0" opacity="0">
+        <a-animation attribute="opacity" begin="500" dur="5000" from="0" to="1"></a-animation>
+      </a-image>
+
+      <a-image
+        id="redirect-text"
+        src="#redirect"
+        width="1.8"
+        height="0.07"
+        position="0 0.8 0"
+        opacity="0"
+        look-at="#avatar"
+      >
+      </a-image>
+
+      <a-obj-model
+          id="github"
+          src="#github-obj"
+          opacity="0"
+          position="0 1.3 0"
+          rotation="90 0 0"
+          scale="8 8 8"
+        >
+        <a-animation attribute="opacity" begin="500" dur="5000" from="0" to="1"></a-animation>
+        <a-event name="mouseenter" scale="8.5 8.5 8.5" color="#FFC65D"></a-event>
+        <a-event name="mouseenter" target="#cursor" scale="2 2 2"></a-event>
+        <a-event name="mouseenter" target="#redirect-text" opacity="1"></a-event>
+        <a-event name="mouseleave" scale="8 8 8" color="white"></a-event>
+        <a-event name="mouseleave" target="#cursor" scale="1 1 1"></a-event>
+        <a-event name="mouseleave" target="#redirect-text" opacity="0"></a-event>
+      </a-obj-model>
+
+      <a-sky color="black"></a-sky>
+
+      <a-plane static-body width="100" height="100" rotation="-90 0 0" position="0 0 0" material="src: #floor; roughness: .5; metalness: 0; opacity: 1; repeat: 100 100" ></a-plane>
+
+      <a-light type="spot" color="white" intensity="4" exponent="16" position="0 3.6 0"></a-light>
+      <a-light type="hemisphere" color="white" groundColor="black" intensity=".5"></a-light>
+      <a-light type="ambient" color="#AAA" intensity=".10" position="0 3 0" distance="7"></a-light>
+    </a-scene>
+
+    <script>
+      document.querySelector('#github').addEventListener('click', function () {
+        window.location = "https://github.com/DimensionLab";
+      });
+
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+      ga('create', 'UA-xxxxxxx-x', 'auto');
+      ga('send', 'pageview');
+    </script>
+  </body>
+</html>
